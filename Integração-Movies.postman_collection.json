@@ -1,0 +1,269 @@
+{
+	"info": {
+		"_postman_id": "45228b40-f678-489f-bb6d-f28899bf34ae",
+		"name": "Integração-Movies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17321692"
+	},
+	"item": [
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "All movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/movies",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"movies"
+							]
+						},
+						"description": "Retorna todos os filmes"
+					},
+					"response": []
+				},
+				{
+					"name": "top10",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/movies/top-ten",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"movies",
+								"top-ten"
+							]
+						},
+						"description": "Retorna os 10 filmes mais bem avaliados"
+					},
+					"response": []
+				},
+				{
+					"name": "Grouped By Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/movies/grouped-by-category",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"movies",
+								"grouped-by-category"
+							]
+						},
+						"description": "Retorna os 10 filmes mais bem avaliados"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/movies/category/historias-reais",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"movies",
+								"category",
+								"historias-reais"
+							]
+						},
+						"description": "Retorna os 10 filmes mais bem avaliados"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/movies/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						},
+						"description": "Retorna os 10 filmes mais bem avaliados"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Criar User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"device_id\": \"exemploDeID3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/users",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "StartFragment\n\nretorna o usuario se ele existir, se nao, cria um novo usuario e retorna ele\n\nEndFragm"
+					},
+					"response": []
+				},
+				{
+					"name": "Pegar User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/users/exemploDeID3",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"users",
+								"exemploDeID3"
+							]
+						},
+						"description": "StartFragment\n\nretorna o usuario se ele existir, se nao, retorna null\n\nEndFragme"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Create Review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_user\": 1,\r\n  \"id_movie\": 1,\r\n  \"score\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/reviews",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"reviews"
+							]
+						},
+						"description": "Retorna todos os filmes"
+					},
+					"response": []
+				},
+				{
+					"name": "Get AVG review",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/reviews/average/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"reviews",
+								"average",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Review By user and movie",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_user\": 1,\r\n  \"id_movie\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/reviews/",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"reviews",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
