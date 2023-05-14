@@ -39,14 +39,3 @@ export function getGroupedByCategory(req, res) {
     else res.send(data);
   });
 }
-
-export function getByCategory(req, res) {
-  Movie.getByCategory(req.params.category, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving skills.",
-      });
-    else res.send(data);
-  });
-}
-

@@ -10,16 +10,13 @@ const Movie = function (movie) {
 };
 
 Movie.getAll = (result) => {
-  db.query(
-    `SELECT * FROM movie`,
-    (err, res) => {
-      if (err) {
-        result(null, err);
-        return;
-      }
-      result(null, res);
+  db.query(`SELECT * FROM movie`, (err, res) => {
+    if (err) {
+      result(null, err);
+      return;
     }
-  );
+    result(null, res);
+  });
 };
 
 Movie.getById = (id, result) => {
@@ -40,13 +37,13 @@ Movie.getById = (id, result) => {
         image_path: res[0].image_path,
         category: res[0].category,
         actors: [],
-        average: res[0].average
+        average: res[0].average,
       };
 
       for (let i = 0; i < res.length; i++) {
         const actor = {
           actor_id: res[i].id_actor,
-          actor_name: res[i].actor_name
+          actor_name: res[i].actor_name,
         };
         movie.actors.push(actor);
       }
@@ -55,8 +52,6 @@ Movie.getById = (id, result) => {
     }
   );
 };
-
-
 
 // get the top 10 movies by average score
 Movie.getTopTen = (result) => {
@@ -91,10 +86,9 @@ Movie.getGroupedByCategory = (result) => {
         );
 
         if (!categoryExists) {
-            
           const category = {
             category: res[i].category,
-            movies: []
+            movies: [],
           };
           categoryArray.push(category);
         }
@@ -105,7 +99,7 @@ Movie.getGroupedByCategory = (result) => {
           synopsis: res[i].synopsis,
           release_year: res[i].release_year,
           image_path: res[i].image_path,
-          category: res[i].category
+          category: res[i].category,
         };
 
         const categoryIndex = categoryArray.findIndex(
@@ -113,30 +107,11 @@ Movie.getGroupedByCategory = (result) => {
         );
 
         categoryArray[categoryIndex].movies.push(movie);
-
       }
 
       return result(null, categoryArray);
     }
   );
 };
-
-
-// get movies by category
-Movie.getByCategory = (category, result) => {
-  db.query(
-    `SELECT * FROM movie WHERE category = ?`,
-    [category],
-    (err, res) => {
-      if (err) {
-        result(null, err);
-        return;
-      }
-      result(null, res);
-    }
-  );
-};
-
-
 
 export default Movie;
