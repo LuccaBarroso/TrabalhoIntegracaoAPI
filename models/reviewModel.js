@@ -6,8 +6,6 @@ const Review = function (review) {
   this.score = review.score; // 1 a 5
 };
 
-
-
 // create new review by user id, movie id and score
 Review.createReview = (newReview, result) => {
   // check if user already reviewed this movie
@@ -51,7 +49,6 @@ Review.createReview = (newReview, result) => {
 
 // get review score average by movie id
 Review.getAverageByMovieId = (id_movie, result) => {
-  console.log(id_movie);
   db.query(
     `SELECT AVG(score) AS average FROM review WHERE id_movie = ?`,
     [id_movie],
@@ -79,7 +76,5 @@ Review.getByMovieIdAndUserId = (id_movie, id_user, result) => {
     }
   );
 };
-
-
 
 export default Review;
