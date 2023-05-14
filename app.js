@@ -3,7 +3,6 @@ import cors from "cors";
 import movieRoutes from "./routes/movieRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
-// import session from "express-session";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 import helmet from "helmet";
@@ -37,14 +36,6 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-// app.use(
-//   session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
-
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
@@ -53,7 +44,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/movies", movieRoutes);
 app.use("/api/reviews", reviewRoutes);
-
 app.use("/api/users", userRoutes);
 
 app.listen(process.env.PORT, () => {
