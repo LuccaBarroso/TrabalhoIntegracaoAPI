@@ -1,16 +1,18 @@
 import fs from "fs";
 import Movie from "./models/movieModel.js";
 
+const path = "/uniflix/arquivos";
+
 export default function () {
   console.log("---------------------start---------------------");
   console.log("Running cron job:");
-  // check if there are files in the ./arquivos/input folder
-  fs.readdir("./arquivos/input", (err, files) => {
+  // check if there are files in the ${path}/input folder
+  fs.readdir(`${path}/input`, (err, files) => {
     if (err) {
       console.log(err);
     } else {
       if (files && files.length > 0) {
-        fs.readFile(`./arquivos/input/${files[0]}`, "utf8", (err, data) => {
+        fs.readFile(`${path}/input/${files[0]}`, "utf8", (err, data) => {
           if (err) {
             console.log("Falha ao ler arquivo");
             moveToErro(files[0]);
@@ -53,8 +55,8 @@ export default function () {
 }
 
 function moveToErro(file) {
-  // move file to ./arquivos/output folder
-  fs.rename(`./arquivos/input/${file}`, `./arquivos/erro/${file}`, (err) => {
+  // move file to ${path}/output folder
+  fs.rename(`${path}/input/${file}`, `${path}/erro/${file}`, (err) => {
     if (err) {
       console.log(err);
     } else {
@@ -63,8 +65,8 @@ function moveToErro(file) {
   });
 }
 function moveToOutput(file) {
-  // move file to ./arquivos/output folder
-  fs.rename(`./arquivos/input/${file}`, `./arquivos/output/${file}`, (err) => {
+  // move file to ${path}/output folder
+  fs.rename(`${path}/input/${file}`, `${path}/output/${file}`, (err) => {
     if (err) {
       console.log(err);
     } else {
