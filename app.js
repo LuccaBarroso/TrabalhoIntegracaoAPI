@@ -3,16 +3,13 @@ import cors from "cors";
 import movieRoutes from "./routes/movieRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
-import rateLimit from "express-rate-limit";
-import compression from "compression";
-import helmet from "helmet";
+import cron from "node-cron";
+import integracaoArquivo from "./integracaoArquivo.js";
 
 import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-
-app.use(compression());
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -21,23 +18,6 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  })
-);
-
-// Limit requests to 100 per hour per IP address
-const limiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hour
-  max: 100,
-  message: "Too many requests from this IP, please try again tomorrow.",
-});
-
-app.use(limiter);
-
-app.use(express.urlencoded({ extended: true }));
-
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to my application." });
 });
@@ -45,6 +25,9 @@ app.get("/", (req, res) => {
 app.use("/api/movies", movieRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/users", userRoutes);
+
+// cron job a cada 15 segundos
+cron.schedule("*/15 * * * * *", integracaoArquivo);
 
 app.listen(process.env.PORT, () => {
   console.log("Server running on port " + process.env.PORT);

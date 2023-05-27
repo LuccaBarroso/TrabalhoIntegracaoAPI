@@ -8,7 +8,4 @@ router.post("/", reviewController.createReview);
 router.get("/average/:id_movie", reviewController.getAverageByMovieId);
 router.get("/", reviewController.getByMovieIdAndUserId);
 
-
-
-
 export default router;

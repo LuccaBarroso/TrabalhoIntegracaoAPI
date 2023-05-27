@@ -21,7 +21,7 @@ Movie.getAll = (result) => {
 
 Movie.getById = (id, result) => {
   db.query(
-    `SELECT movie.*, actor.name AS actor_name, actor.id_actor, review.score AS review_score, review.id_user, AVG(review.score) AS average FROM movie LEFT JOIN movie_actor ON movie.id_movie = movie_actor.id_movie LEFT JOIN actor ON movie_actor.id_actor = actor.id_actor LEFT JOIN review ON movie.id_movie = review.id_movie WHERE movie.id_movie = ? GROUP BY movie.id_movie, actor.id_actor`,
+    `SELECT movie.*, actor.name AS actor_name, actor.id_actor, review.score AS review_score, review.id_user, FLOOR(AVG(review.score)) AS average FROM movie LEFT JOIN movie_actor ON movie.id_movie = movie_actor.id_movie LEFT JOIN actor ON movie_actor.id_actor = actor.id_actor LEFT JOIN review ON movie.id_movie = review.id_movie WHERE movie.id_movie = ? GROUP BY movie.id_movie, actor.id_actor`,
     [id],
     (err, res) => {
       if (err) {
@@ -56,7 +56,7 @@ Movie.getById = (id, result) => {
 // get the top 10 movies by average score
 Movie.getTopTen = (result) => {
   db.query(
-    `SELECT movie.*, AVG(review.score) AS average FROM movie LEFT JOIN review ON movie.id_movie = review.id_movie GROUP BY movie.id_movie ORDER BY average DESC LIMIT 10`,
+    `SELECT movie.*, FLOOR(AVG(review.score)) AS average FROM movie LEFT JOIN review ON movie.id_movie = review.id_movie GROUP BY movie.id_movie ORDER BY average DESC LIMIT 10`,
     (err, res) => {
       if (err) {
         result(null, err);
@@ -110,6 +110,26 @@ Movie.getGroupedByCategory = (result) => {
       }
 
       return result(null, categoryArray);
+    }
+  );
+};
+
+Movie.create = (newMovie, result) => {
+  db.query(
+    `INSERT INTO movie (title, synopsis, release_year, image_path, category) VALUES (?, ?, ?, ?, ?)`,
+    [
+      newMovie.title,
+      newMovie.synopsis,
+      newMovie.release_year,
+      newMovie.image_path,
+      newMovie.category,
+    ],
+    (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+      result(null, { id_movie: res.insertId, ...newMovie });
     }
   );
 };

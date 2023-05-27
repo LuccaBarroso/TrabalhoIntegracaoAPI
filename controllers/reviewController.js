@@ -2,7 +2,7 @@ import Review from "../models/reviewModel.js";
 
 export function createReview(req, res) {
   const newReview = new Review({
-    id_user: req.body.id_user,
+    device_id: req.body.device_id,
     id_movie: req.body.id_movie,
     score: req.body.score,
   });
@@ -29,7 +29,7 @@ export function getAverageByMovieId(req, res) {
 export function getByMovieIdAndUserId(req, res) {
   Review.getByMovieIdAndUserId(
     req.body.id_movie,
-    req.body.id_user,
+    req.body.device_id,
     (err, data) => {
       if (err)
         res.status(500).send({
@@ -42,5 +42,3 @@ export function getByMovieIdAndUserId(req, res) {
     }
   );
 }
-
-
