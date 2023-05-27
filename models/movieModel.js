@@ -21,7 +21,7 @@ Movie.getAll = (result) => {
 
 Movie.getById = (id, result) => {
   db.query(
-    `SELECT movie.*, actor.name AS actor_name, actor.id_actor, review.score AS review_score, review.id_user, FLOOR(AVG(review.score)) AS average FROM movie LEFT JOIN movie_actor ON movie.id_movie = movie_actor.id_movie LEFT JOIN actor ON movie_actor.id_actor = actor.id_actor LEFT JOIN review ON movie.id_movie = review.id_movie WHERE movie.id_movie = ? GROUP BY movie.id_movie, actor.id_actor`,
+    `SELECT movie.*, actor.name AS actor_name, actor.id_actor, review.score AS review_score, review.id_user, FLOOR(AVG(coalesce(review.score, 0))) AS average FROM movie LEFT JOIN movie_actor ON movie.id_movie = movie_actor.id_movie LEFT JOIN actor ON movie_actor.id_actor = actor.id_actor LEFT JOIN review ON movie.id_movie = review.id_movie WHERE movie.id_movie = ? GROUP BY movie.id_movie, actor.id_actor`,
     [id],
     (err, res) => {
       if (err) {

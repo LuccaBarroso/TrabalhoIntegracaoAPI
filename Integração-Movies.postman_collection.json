@@ -15,11 +15,31 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}api/movies",
+							"raw": "{{URL}}/api/movies",
 							"host": [
-								"{{URL}}api"
+								"{{URL}}"
 							],
 							"path": [
+								"api",
+								"movies"
+							]
+						},
+						"description": "Retorna todos os filmes"
+					},
+					"response": []
+				},
+				{
+					"name": "All movies Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/movies",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
 								"movies"
 							]
 						},
@@ -52,33 +72,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}api/movies/grouped-by-category",
+							"raw": "{{URL}}/api/movies/grouped-by-category",
 							"host": [
-								"{{URL}}api"
+								"{{URL}}"
 							],
 							"path": [
+								"api",
 								"movies",
 								"grouped-by-category"
-							]
-						},
-						"description": "Retorna os 10 filmes mais bem avaliados"
-					},
-					"response": []
-				},
-				{
-					"name": "Get By Category",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}api/movies/category/historias-reais",
-							"host": [
-								"{{URL}}api"
-							],
-							"path": [
-								"movies",
-								"category",
-								"historias-reais"
 							]
 						},
 						"description": "Retorna os 10 filmes mais bem avaliados"
@@ -91,11 +92,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}api/movies/1",
+							"raw": "{{URL}}/api/movies/1",
 							"host": [
-								"{{URL}}api"
+								"{{URL}}"
 							],
 							"path": [
+								"api",
 								"movies",
 								"1"
 							]
@@ -116,7 +118,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"device_id\": \"exemploDeID3\"\r\n}",
+							"raw": "{\r\n    \"device_id\": \"exemploDeID\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -124,34 +126,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}api/users",
+							"raw": "{{URL}}/api/users",
 							"host": [
-								"{{URL}}api"
+								"{{URL}}"
 							],
 							"path": [
+								"api",
 								"users"
 							]
 						},
 						"description": "StartFragment\n\nretorna o usuario se ele existir, se nao, cria um novo usuario e retorna ele\n\nEndFragm"
-					},
-					"response": []
-				},
-				{
-					"name": "Pegar User",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}api/users/exemploDeID3",
-							"host": [
-								"{{URL}}api"
-							],
-							"path": [
-								"users",
-								"exemploDeID3"
-							]
-						},
-						"description": "StartFragment\n\nretorna o usuario se ele existir, se nao, retorna null\n\nEndFragme"
 					},
 					"response": []
 				}
@@ -167,7 +151,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id_user\": 1,\r\n  \"id_movie\": 1,\r\n  \"score\": 2\r\n}",
+							"raw": "{\r\n  \"device_id\": 1,\r\n  \"id_movie\": 23,\r\n  \"score\": 5\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -175,11 +159,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}api/reviews",
+							"raw": "{{URL}}/api/reviews",
 							"host": [
-								"{{URL}}api"
+								"{{URL}}"
 							],
 							"path": [
+								"api",
 								"reviews"
 							]
 						},
@@ -193,11 +178,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}api/reviews/average/1",
+							"raw": "{{URL}}/api/reviews/average/1",
 							"host": [
-								"{{URL}}api"
+								"{{URL}}"
 							],
 							"path": [
+								"api",
 								"reviews",
 								"average",
 								"1"
@@ -216,7 +202,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id_user\": 1,\r\n  \"id_movie\": 1\r\n}",
+							"raw": "{\r\n  \"device_id\": 1,\r\n  \"id_movie\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -224,11 +210,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}api/reviews/",
+							"raw": "{{URL}}/api/reviews/",
 							"host": [
-								"{{URL}}api"
+								"{{URL}}"
 							],
 							"path": [
+								"api",
 								"reviews",
 								""
 							]
