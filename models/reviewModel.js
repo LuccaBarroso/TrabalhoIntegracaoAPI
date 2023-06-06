@@ -107,6 +107,12 @@ Review.getByMovieIdAndUserId = (id_movie, device_id, result) => {
         result(null, err);
         return;
       }
+      if (res.length == 0) {
+        result(null, {
+          score: 0,
+        });
+        return;
+      }
       id_user = res[0].id_user;
       db.query(
         `SELECT score FROM review WHERE id_movie = ? AND id_user = ?`,
