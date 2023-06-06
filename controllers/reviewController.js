@@ -28,8 +28,8 @@ export function getAverageByMovieId(req, res) {
 
 export function getByMovieIdAndUserId(req, res) {
   Review.getByMovieIdAndUserId(
-    req.body.id_movie,
-    req.body.device_id,
+    req.params.id_movie,
+    req.params.device_id,
     (err, data) => {
       if (err)
         res.status(500).send({
