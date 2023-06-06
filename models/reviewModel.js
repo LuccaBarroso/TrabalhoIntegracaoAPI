@@ -6,7 +6,6 @@ const Review = function (review) {
   this.score = review.score; // 1 a 5
 };
 
-// create new review by device_id, movie id and score
 Review.createReview = (newReview, result) => {
   // get user id by device id
   db.query(
@@ -17,47 +16,69 @@ Review.createReview = (newReview, result) => {
         result(null, err);
         return;
       }
-      newReview.id_user = res[0].id_user;
-      // check if user already reviewed this movie
-      db.query(
-        `SELECT * FROM review WHERE id_user = ? AND id_movie = ?`,
-        [newReview.id_user, newReview.id_movie],
-        (err, res) => {
-          if (err) {
-            result(null, err);
-            return;
+
+      if (res.length > 0) {
+        // User already exists, proceed with review creation
+        newReview.id_user = res[0].id_user;
+        createOrUpdateReview(newReview, result);
+      } else {
+        // User does not exist, create a new user and then proceed with review creation
+        db.query(
+          `INSERT INTO user (device_id) VALUES (?)`,
+          [newReview.device_id],
+          (err, res) => {
+            if (err) {
+              result(null, err);
+              return;
+            }
+
+            newReview.id_user = res.insertId;
+            createOrUpdateReview(newReview, result);
           }
-          if (res.length > 0) {
-            // if yes, update review
-            db.query(
-              `UPDATE review SET score = ? WHERE id_user = ? AND id_movie = ?`,
-              [newReview.score, newReview.id_user, newReview.id_movie],
-              (err, res) => {
-                if (err) {
-                  result(null, err);
-                  return;
-                }
-                result(null, newReview);
-              }
-            );
-          } else {
-            db.query(
-              `INSERT INTO review (id_user, id_movie, score) VALUES (?, ?, ?)`,
-              [newReview.id_user, newReview.id_movie, newReview.score],
-              (err, res) => {
-                if (err) {
-                  result(null, err);
-                  return;
-                }
-                result(null, newReview);
-              }
-            );
-          }
-        }
-      );
+        );
+      }
     }
   );
 };
+
+function createOrUpdateReview(newReview, result) {
+  db.query(
+    `SELECT * FROM review WHERE id_user = ? AND id_movie = ?`,
+    [newReview.id_user, newReview.id_movie],
+    (err, res) => {
+      if (err) {
+        result(null, err);
+        return;
+      }
+
+      if (res.length > 0) {
+        db.query(
+          `UPDATE review SET score = ? WHERE id_user = ? AND id_movie = ?`,
+          [newReview.score, newReview.id_user, newReview.id_movie],
+          (err, res) => {
+            if (err) {
+              result(null, err);
+              return;
+            }
+            result(null, newReview);
+          }
+        );
+      } else {
+        db.query(
+          `INSERT INTO review (id_user, id_movie, score) VALUES (?, ?, ?)`,
+          [newReview.id_user, newReview.id_movie, newReview.score],
+          (err, res) => {
+            if (err) {
+              result(null, err);
+              return;
+            }
+            result(null, newReview);
+          }
+        );
+      }
+    }
+  );
+}
 
 // get review score average by movie id
 Review.getAverageByMovieId = (id_movie, result) => {
